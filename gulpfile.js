@@ -1,32 +1,19 @@
 var gulp = require('gulp');
 var sass = require('gulp-sass');
-var useref = require('gulp-useref');
-var runSequence = require('run-sequence');
+var babel = require('gulp-babel');
 
-gulp.task('default', function() {
-  console.log('Hello');
-});
-
-gulp.task('sass', function(){
-  return gulp.src('app/scss/**/*.scss')
+gulp.task('sass', function () {
+  gulp.src('app/styles/**/*.scss')
     .pipe(sass())
-    .pipe(gulp.dest('dist'))
+    .pipe(gulp.dest('dist/'));
 });
 
-gulp.task('js', function(){
-  return gulp.src('app/js/**/*.js')
-    .pipe(useref())
-    .pipe(gulp.dest('dist'))
+gulp.task('js', function () {
+  gulp.src('app/js/**/*.js')
+    .pipe(babel({
+        presets: ['env']
+    }))
+    .pipe(gulp.dest('dist/'))
 });
 
-gulp.task('watch', function(){
-  gulp.watch('app/scss/**/*.scss', ['sass']); 
-  gulp.watch('app/js/**/*.js', ['js']); 
-});
-
-gulp.task('build', function (callback) {
-  runSequence('clean:dist', 
-    ['sass', 'js'],
-    callback
-  )
-});
+gulp.task('default', ['sass'], ['js']);
