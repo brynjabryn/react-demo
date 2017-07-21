@@ -11,9 +11,9 @@ gulp.task('sass', function () {
 gulp.task('js', function () {
   gulp.src('app/js/**/*.js')
     .pipe(babel({
-        presets: ['env']
+        presets: ['es2015']
     }))
-    .pipe(gulp.dest('dist/'))
+    .pipe(gulp.dest('dist/'));
 });
 
-gulp.task('default', ['sass'], ['js']);
+gulp.task('default', ['sass', 'js']);
