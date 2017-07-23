@@ -1,18 +1,27 @@
 var gulp = require('gulp');
 var sass = require('gulp-sass');
 var babel = require('gulp-babel');
+const concat = require('gulp-concat');
+const browserify = require('browserify');
+
+var paths = {
+    sass: ['app/styles/**/*.scss'],
+    js: ['app/js/**/*.js']
+};
 
 gulp.task('sass', function () {
-  gulp.src('app/styles/**/*.scss')
+  gulp.src(paths.sass)
     .pipe(sass())
     .pipe(gulp.dest('dist/'));
 });
 
 gulp.task('js', function () {
-  gulp.src('app/js/**/*.js')
+    browserify(paths.js)
+    .bundle()
     .pipe(babel({
-        presets: ['es2015']
+        presets: ['react']
     }))
+    .pipe(concat('app.js'))
     .pipe(gulp.dest('dist/'));
 });
 
