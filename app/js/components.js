@@ -3,7 +3,9 @@ var ReactDOM = require('react-dom');
 
 class Hello extends React.Component {
     render() {
-        return( Hello );
+        return( 
+            <div><p>Hello</p></div> 
+        );
     }
 }
                
